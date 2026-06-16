@@ -3,68 +3,172 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TikTok Downloader - Descargar sin marca de agua</title>
+  <title>TikDown - Descargar videos de TikTok sin marca de agua</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
   <header>
-    <div class="logo">🎵 TikDown</div>
-    <nav>
-      <a href="#">Descargar MP3</a>
-      <a href="#">Historias</a>
-    </nav>
+    <div class="nav-container">
+      <div class="logo">
+        <span class="logo-icon">▶</span>
+        <span class="logo-text">Tik<span class="accent">Down</span></span>
+      </div>
+      <nav>
+        <a href="#">MP3</a>
+        <a href="#">Historias</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
   </header>
 
   <main>
     <section class="hero">
-      <h1>Descargar videos de TikTok</h1>
-      <p>Sin marca de agua · Gratis · HD · MP4 y MP3</p>
+      <div class="badge">✨ 100% Gratis y Sin Límites</div>
+      <h1>Descarga videos de<br/><span class="gradient-text">TikTok sin marca</span><br/>de agua</h1>
+      <p class="subtitle">La forma más rápida y fácil de guardar tus videos favoritos en HD</p>
 
-      <div class="input-box">
-        <input
-          type="text"
-          id="tiktok-url"
-          placeholder="Pega el enlace del video de TikTok aquí..."
-        />
-        <button id="download-btn">Descargar</button>
+      <div class="search-container">
+        <div class="input-wrapper">
+          <span class="input-icon">🔗</span>
+          <input
+            type="text"
+            id="tiktok-url"
+            placeholder="Pega el enlace del video aquí..."
+          />
+          <button id="clear-btn" class="clear-btn" style="display:none">✕</button>
+        </div>
+        <button id="download-btn" class="btn-main">
+          <span>Descargar</span>
+          <span class="btn-arrow">→</span>
+        </button>
       </div>
 
-      <div id="result" class="result hidden"></div>
-      <div id="loading" class="loading hidden">⏳ Procesando...</div>
-      <div id="error" class="error hidden"></div>
+      <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <span>Procesando tu video...</span>
+      </div>
+
+      <div id="error" class="error-box hidden"></div>
+
+      <div id="result" class="result-card hidden"></div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <strong>10M+</strong>
+        <span>Descargas</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <strong>4.9★</strong>
+        <span>Valoración</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <strong>100%</strong>
+        <span>Gratis</span>
+      </div>
     </section>
 
     <section class="features">
-      <div class="feature">
-        <span>⚡</span>
-        <h3>Descargas ilimitadas</h3>
-        <p>Sin límites ni restricciones</p>
-      </div>
-      <div class="feature">
-        <span>🚫</span>
-        <h3>Sin marca de agua</h3>
-        <p>Video limpio y en HD</p>
-      </div>
-      <div class="feature">
-        <span>🎵</span>
-        <h3>MP4 y MP3</h3>
-        <p>Elige el formato que quieras</p>
+      <h2>¿Por qué elegir <span class="accent">TikDown</span>?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Ultra Rápido</h3>
+          <p>Descarga en segundos con nuestra tecnología optimizada</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚫</div>
+          <h3>Sin Marca de Agua</h3>
+          <p>Videos completamente limpios y en la mejor calidad HD</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎵</div>
+          <h3>MP4 y MP3</h3>
+          <p>Descarga en video o extrae solo el audio fácilmente</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>100% Seguro</h3>
+          <p>No almacenamos tus datos ni guardamos los videos</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Todos los Dispositivos</h3>
+          <p>Funciona en móvil, tablet y PC sin instalar nada</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">♾️</div>
+          <h3>Sin Límites</h3>
+          <p>Descarga tantos videos como quieras sin restricciones</p>
+        </div>
       </div>
     </section>
 
     <section class="how-to">
-      <h2>¿Cómo usarlo?</h2>
-      <ol>
-        <li>Abre TikTok y encuentra el video que quieres guardar</li>
-        <li>Toca <strong>Compartir</strong> → <strong>Copiar enlace</strong></li>
-        <li>Pega el enlace arriba y haz clic en <strong>Descargar</strong></li>
-      </ol>
+      <h2>¿Cómo funciona?</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Copia el enlace</h3>
+            <p>Abre TikTok, toca <strong>Compartir</strong> → <strong>Copiar enlace</strong></p>
+          </div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Pega la URL</h3>
+            <p>Pega el enlace en el campo de arriba y toca <strong>Descargar</strong></p>
+          </div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Guarda tu video</h3>
+            <p>Elige MP4 o MP3 y descarga al instante en HD</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">¿Es completamente gratis? <span>+</span></button>
+          <div class="faq-a">Sí, TikDown es 100% gratuito sin límites de descargas.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Funciona en iPhone y Android? <span>+</span></button>
+          <div class="faq-a">Sí, funciona en cualquier dispositivo con navegador web.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Guardan mis videos? <span>+</span></button>
+          <div class="faq-a">No. Los videos vienen directamente de TikTok, no los almacenamos.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Puedo descargar videos privados? <span>+</span></button>
+          <div class="faq-a">Solo funciona con videos públicos de TikTok.</div>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>© 2026 TikDown · Herramienta gratuita de descarga</p>
+    <div class="footer-content">
+      <div class="logo">
+        <span class="logo-icon">▶</span>
+        <span class="logo-text">Tik<span class="accent">Down</span></span>
+      </div>
+      <p>Herramienta gratuita para descargar videos de TikTok</p>
+      <p class="footer-note">© 2026 TikDown · No afiliado con TikTok</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>
