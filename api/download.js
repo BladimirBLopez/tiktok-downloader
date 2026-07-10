@@ -9,16 +9,31 @@ const RAPIDAPI_HOST = 'social-download-all-in-one.p.rapidapi.com';
 const RAPIDAPI_ENDPOINT = `https://${RAPIDAPI_HOST}/v1/social/autolink`;
 
 const PLATFORM_PATTERNS = [
-  { id: 'tiktok', label: 'TikTok', regex: /tiktok\.com/i },
-  { id: 'instagram', label: 'Instagram', regex: /instagram\.com/i },
-  { id: 'facebook', label: 'Facebook', regex: /(facebook\.com|fb\.watch)/i },
-  { id: 'youtube', label: 'YouTube', regex: /(youtube\.com|youtu\.be)/i },
-  { id: 'twitter', label: 'X / Twitter', regex: /(twitter\.com|x\.com)/i },
-  { id: 'pinterest', label: 'Pinterest', regex: /(pinterest\.com|pin\.it)/i },
+  { id: 'tiktok', label: 'TikTok', domains: ['tiktok.com'] },
+  { id: 'instagram', label: 'Instagram', domains: ['instagram.com'] },
+  { id: 'facebook', label: 'Facebook', domains: ['facebook.com', 'fb.watch'] },
+  { id: 'youtube', label: 'YouTube', domains: ['youtube.com', 'youtu.be'] },
+  { id: 'twitter', label: 'X / Twitter', domains: ['twitter.com', 'x.com'] },
+  { id: 'pinterest', label: 'Pinterest', domains: ['pinterest.com', 'pin.it'] },
 ];
 
+// Compara el hostname real, no un substring del link completo, para evitar
+// falsos positivos (ej. "netflix.com" detectado como X/Twitter).
+function getHostname(rawUrl) {
+  try {
+    const withScheme = /^https?:\/\//i.test(rawUrl) ? rawUrl : `https://${rawUrl}`;
+    return new URL(withScheme).hostname.toLowerCase().replace(/^www\./, '');
+  } catch {
+    return null;
+  }
+}
+
 function detectPlatform(url) {
-  return PLATFORM_PATTERNS.find(p => p.regex.test(url)) || null;
+  const hostname = getHostname(url);
+  if (!hostname) return null;
+  return PLATFORM_PATTERNS.find(p =>
+    p.domains.some(d => hostname === d || hostname.endsWith(`.${d}`))
+  ) || null;
 }
 
 // La respuesta exacta de la API puede variar de versión en versión.

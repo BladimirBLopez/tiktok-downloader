@@ -542,10 +542,10 @@ section h2 {
   padding: 0 18px;
   font-size: 0.88rem;
   color: var(--ink-dim);
-  transition: max-height 0.25s ease, padding 0.25s ease;
+  transition: max-height 0.3s ease, padding 0.25s ease;
 }
 
-.faq-a.open { max-height: 200px; padding: 0 18px 16px; }
+.faq-a.open { max-height: 300px; padding: 0 18px 16px; }
 
 /* ---------- Footer ---------- */
 footer {

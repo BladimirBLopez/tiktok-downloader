@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bajalo — Descarga video o audio de TikTok, Instagram, YouTube, Facebook, X y Pinterest</title>
   <meta name="description" content="Pega el link de cualquier red social y descarga el video en HD o el audio en MP3. Sin marca de agua, sin registro, gratis." />
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bajalo — Descarga video o audio de cualquier red social">
+  <meta property="og:description" content="Pega el link de TikTok, Instagram, Facebook, YouTube, X o Pinterest y descargá en HD o MP3. Gratis y sin registro.">
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bajalo — Descarga video o audio de cualquier red social">
+  <meta name="twitter:description" content="Pega el link de TikTok, Instagram, Facebook, YouTube, X o Pinterest y descargá en HD o MP3. Gratis y sin registro.">
+  <meta name="twitter:image" content="/og-image.png">
+
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -60,14 +76,14 @@
         </button>
       </div>
 
-      <div id="loading" class="loading hidden">
+      <div id="loading" class="loading hidden" role="status" aria-live="polite">
         <div class="spinner"></div>
         <span>Procesando tu enlace...</span>
       </div>
 
-      <div id="error" class="error-box hidden"></div>
+      <div id="error" class="error-box hidden" role="alert" aria-live="assertive"></div>
 
-      <div id="result" class="result-card hidden"></div>
+      <div id="result" class="result-card hidden" aria-live="polite"></div>
 
       <div class="chips-row" aria-label="Plataformas soportadas">
         <span class="chip" data-chip="tiktok"><i></i>TikTok</span>

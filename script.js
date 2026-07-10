@@ -11,16 +11,31 @@ const clearBtn = document.getElementById('clear-btn');
 
 // ---------- Platform detection ----------
 const PLATFORMS = [
-  { id: 'tiktok', label: 'TikTok', regex: /tiktok\.com/i },
-  { id: 'instagram', label: 'Instagram', regex: /instagram\.com/i },
-  { id: 'facebook', label: 'Facebook', regex: /(facebook\.com|fb\.watch)/i },
-  { id: 'youtube', label: 'YouTube', regex: /(youtube\.com|youtu\.be)/i },
-  { id: 'twitter', label: 'X / Twitter', regex: /(twitter\.com|x\.com)/i },
-  { id: 'pinterest', label: 'Pinterest', regex: /(pinterest\.com|pin\.it)/i },
+  { id: 'tiktok', label: 'TikTok', domains: ['tiktok.com'] },
+  { id: 'instagram', label: 'Instagram', domains: ['instagram.com'] },
+  { id: 'facebook', label: 'Facebook', domains: ['facebook.com', 'fb.watch'] },
+  { id: 'youtube', label: 'YouTube', domains: ['youtube.com', 'youtu.be'] },
+  { id: 'twitter', label: 'X / Twitter', domains: ['twitter.com', 'x.com'] },
+  { id: 'pinterest', label: 'Pinterest', domains: ['pinterest.com', 'pin.it'] },
 ];
 
+// Compara el hostname real de la URL, no un substring del texto completo,
+// para evitar falsos positivos (ej. "netflix.com" detectado como X/Twitter).
+function getHostname(rawUrl) {
+  try {
+    const withScheme = /^https?:\/\//i.test(rawUrl) ? rawUrl : `https://${rawUrl}`;
+    return new URL(withScheme).hostname.toLowerCase().replace(/^www\./, '');
+  } catch {
+    return null;
+  }
+}
+
 function detectPlatform(url) {
-  return PLATFORMS.find(p => p.regex.test(url)) || null;
+  const hostname = getHostname(url);
+  if (!hostname) return null;
+  return PLATFORMS.find(p =>
+    p.domains.some(d => hostname === d || hostname.endsWith(`.${d}`))
+  ) || null;
 }
 
 function updatePlatformUI(url) {
@@ -85,9 +100,16 @@ document.querySelectorAll('.faq-q').forEach(q => {
 function renderResult(data) {
   const medias = Array.isArray(data.medias) ? data.medias : [];
 
-  // Try to split into a best video option and a best audio option.
-  const videoMedia = medias.find(m => (m.type || '').toLowerCase().includes('video')) || medias[0];
-  const audioMedia = medias.find(m => (m.type || '').toLowerCase().includes('audio'));
+  const isVideo = m => (m.type || '').toLowerCase().includes('video');
+  const isAudio = m => (m.type || '').toLowerCase().includes('audio');
+
+  const videoMedia = medias.find(isVideo);
+  const audioMedia = medias.find(isAudio);
+  // Si ningún item viene marcado como video ni audio, usamos el primero
+  // como opción genérica, pero SIN llamarlo "video" para no mentir sobre
+  // el contenido real del archivo (evita el caso de un pin/post que solo
+  // trae audio y terminaba con un botón "Descargar video" apuntando a él).
+  const genericMedia = !videoMedia && !audioMedia ? medias[0] : null;
 
   const buttonsHtml = [];
   if (videoMedia && videoMedia.url) {
@@ -96,9 +118,12 @@ function renderResult(data) {
   if (audioMedia && audioMedia.url) {
     buttonsHtml.push(`<a class="btn-dl mp3" href="${audioMedia.url}" target="_blank" rel="noopener">🎵 Descargar audio (MP3)</a>`);
   }
-  // Any extra quality options beyond the two picked above
+  if (genericMedia && genericMedia.url) {
+    buttonsHtml.push(`<a class="btn-dl alt" href="${genericMedia.url}" target="_blank" rel="noopener">⬇️ Descargar archivo</a>`);
+  }
+  // Cualquier otra calidad/opción extra que haya devuelto la API
   medias
-    .filter(m => m !== videoMedia && m !== audioMedia && m.url)
+    .filter(m => m !== videoMedia && m !== audioMedia && m !== genericMedia && m.url)
     .slice(0, 3)
     .forEach(m => {
       const label = m.quality || m.extension || 'Otra calidad';
